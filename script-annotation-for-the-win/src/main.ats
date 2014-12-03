@@ -1,0 +1,8 @@
+import {cow, dog} from './src';
+
+class table { }
+
+_.each([cow, dog, table], c => {      
+    var noop =  { speak : () => {}};
+    (c.annotations || [ noop ])[0].speak();
+}); 

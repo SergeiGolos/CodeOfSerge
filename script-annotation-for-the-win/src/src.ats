@@ -1,0 +1,18 @@
+class animal {  
+    constructor(sound) {
+        this.sound = sound;
+    }    
+    speak() {
+        console.log(this.sound);
+    }    
+}
+
+// Create a cow class an annotate it with a cow sound.
+@animal('Mooo')
+export class cow {  
+}
+
+// Create a dog class and annotate it with a dog sound.
+@animal('Woof')
+export class dog {  
+}

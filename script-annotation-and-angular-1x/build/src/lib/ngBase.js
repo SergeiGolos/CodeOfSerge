@@ -1,16 +1,25 @@
 define([], function() {
   "use strict";
-  var ngBase = function ngBase(name, inject, options) {
+  var ngBase = function ngBase(name, options) {
     this.args = {
       name: name,
-      inject: inject || [],
       options: options || {}
     };
   };
   ($traceurRuntime.createClass)(ngBase, {
+    get name() {
+      return this.args.name;
+    },
+    get options() {
+      return this.args.options;
+    },
     wrap: function(fn) {
       var result = [];
-      for (var $__1 = this.inject[Symbol.iterator](),
+      var injectAnnotation = fn.annotations.filter((function(item, index) {
+        return item.constructor.name === "ngInject";
+      }));
+      var inject = injectAnnotation.length > 0 ? injectAnnotation[0].inject : [];
+      for (var $__1 = inject[Symbol.iterator](),
           $__2; !($__2 = $__1.next()).done; ) {
         var item = $__2.value;
         {
@@ -19,15 +28,6 @@ define([], function() {
       }
       result.push(fn);
       return result;
-    },
-    get name() {
-      return this.args.name;
-    },
-    get inject() {
-      return this.args.inject;
-    },
-    get options() {
-      return this.args.options;
     }
   }, {});
   return {

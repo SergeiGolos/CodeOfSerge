@@ -1,15 +1,24 @@
 import {ngDirective} from './lib/ngDirective';
+import {ngInject} from './lib/ngInject';
 
-@ngDirective('hello', ['data'], {
+@ngDirective('hello', {
 	scope : true,
 	template : '<div> hello {{data}}</div>',
 	restrict : 'AE'
 })
-
-export class hello {
+@ngInject(['data'])
+export class hello {	
 	constructor(data) {
 		return (scope, element, attr) => {
 			scope.data = data();
 		}
+	}
+	
+	compile() {
+
+	}
+
+	contoller() {
+
 	}
 }

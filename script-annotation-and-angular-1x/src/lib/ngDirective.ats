@@ -1,7 +1,7 @@
 import {ngBase} from './ngBase';
 
 export class ngDirective extends ngBase {
-	register(app, fn) {			
+	register(app, fn) {					
 		var options = {};
 		for (var prop in this.options)
 		{

@@ -5,14 +5,12 @@
   <body>
     <div data-ng-controller="main">
         {{data}}
-
         <div data-hello=""/>
     </div>
     <script src="./bower_components/angular/angular.js"></script>
     <script src="./bower_components/lodash/dist/lodash.js"></script>
     <script src="./node_modules/traceur/bin/traceur-runtime.js"></script>
     <script src="./node_modules/requirejs/require.js"></script>
-
     <script>
       require.config({
         paths: {
@@ -21,6 +19,5 @@
         deps: ['./build/src/bootstrap']
       });
     </script>
-
   </body>
 </html>

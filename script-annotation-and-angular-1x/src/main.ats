@@ -1,6 +1,9 @@
 import {ngController} from './lib/ngController';
+import {ngInject} from './lib/ngInject';
 
-@ngController('main', ['$scope', 'data'])
+
+@ngController('main')
+@ngInject(['$scope', 'data'])
 export class main {
   constructor($scope, data) {
   	$scope.data = data();

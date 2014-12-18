@@ -1,5 +1,8 @@
 export class ngInject {
 	constructor(inject) {
-		this.inject = inject;
+		this.args = {
+			inject : inject
+		};		
 	}	
+	get inject() { return this.args.inject; }		
 }

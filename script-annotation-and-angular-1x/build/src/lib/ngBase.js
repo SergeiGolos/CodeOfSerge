@@ -13,11 +13,14 @@ define([], function() {
     get options() {
       return this.args.options;
     },
+    find: function(fn, name) {
+      return fn.annotations.filter((function(item, index) {
+        return item.constructor.name === name;
+      }));
+    },
     wrap: function(fn) {
       var result = [];
-      var injectAnnotation = fn.annotations.filter((function(item, index) {
-        return item.constructor.name === "ngInject";
-      }));
+      var injectAnnotation = this.find(fn, 'ngInject');
       var inject = injectAnnotation.length > 0 ? injectAnnotation[0].inject : [];
       for (var $__1 = inject[Symbol.iterator](),
           $__2; !($__2 = $__1.next()).done; ) {

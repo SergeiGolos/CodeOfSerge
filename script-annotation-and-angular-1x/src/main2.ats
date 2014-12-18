@@ -2,11 +2,10 @@ import {ngController} from './lib/ngController';
 import {ngInject} from './lib/ngInject';
 import {ngRoute} from './lib/ngRoute';
 
-
-@ngController('main')
+@ngController('main2')
 @ngInject(['$scope', 'data'])
-@ngRoute('/Home', { templateUrl : 'Home.html'})
-export class main {
+@ngRoute('/Home2', { templateUrl : 'Home2.html'})
+export class main2 {
   constructor($scope, data) {
   	$scope.data = data();
   }

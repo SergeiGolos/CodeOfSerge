@@ -29,6 +29,7 @@ define([], function() {
     }));
     it('expects the D to be defined on a dervied object', (function() {
       expect(dervied.B).not.toBeDefined();
+      expect(dervied.D).toBeDefined();
     }));
   });
   return {};

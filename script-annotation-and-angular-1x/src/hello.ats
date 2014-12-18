@@ -7,13 +7,13 @@ import {ngInject} from './lib/ngInject';
 	restrict : 'AE'
 })
 @ngInject(['data'])
-export class hello {	
+export class hello {
 	constructor(data) {
 		return (scope, element, attr) => {
 			scope.data = data();
 		}
 	}
-	
+
 	compile() {
 
 	}

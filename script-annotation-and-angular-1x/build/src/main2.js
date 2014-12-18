@@ -9,19 +9,19 @@ define(['./lib/ngController', './lib/ngInject', './lib/ngRoute'], function($__0,
   var ngController = $__0.ngController;
   var ngInject = $__2.ngInject;
   var ngRoute = $__4.ngRoute;
-  var main = function main($scope, data) {
+  var main2 = function main2($scope, data) {
     $scope.data = data();
   };
-  ($traceurRuntime.createClass)(main, {}, {});
-  Object.defineProperty(main, "annotations", {get: function() {
-      return [new ngController('main'), new ngInject(['$scope', 'data']), new ngRoute('/Home', {templateUrl: 'Home.html'})];
+  ($traceurRuntime.createClass)(main2, {}, {});
+  Object.defineProperty(main2, "annotations", {get: function() {
+      return [new ngController('main2'), new ngInject(['$scope', 'data']), new ngRoute('/Home2', {templateUrl: 'Home2.html'})];
     }});
   return {
-    get main() {
-      return main;
+    get main2() {
+      return main2;
     },
     __esModule: true
   };
 });
 
-//# sourceMappingURL=main.map
+//# sourceMappingURL=main2.map

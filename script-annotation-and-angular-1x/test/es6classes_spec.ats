@@ -42,6 +42,6 @@ describe('Tracuer ES5 classes', function() {
 
   it('expects the D to be defined on a dervied object', () => {
     expect(dervied.B).not.toBeDefined();
-    //expect(derived.D).toBeDefined();
+    expect(dervied.D).toBeDefined();
   })
 });

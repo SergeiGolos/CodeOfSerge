@@ -8,7 +8,14 @@ define(['./ngBase'], function($__0) {
   };
   var $ngController = ngController;
   ($traceurRuntime.createClass)(ngController, {register: function(app, fn) {
-      app.controller(this.name, this.wrap(fn));
+      var routes = this.find(fn, 'ngRoute');
+      var controllerName = this.name;
+      app.controller(controllerName, this.wrap(fn));
+      return function($routeProvider) {
+        _.each(routes, function(route) {
+          $routeProvider.when(route.path, _.assign({controller: controllerName}, route.options));
+        });
+      };
     }}, {}, ngBase);
   return {
     get ngController() {

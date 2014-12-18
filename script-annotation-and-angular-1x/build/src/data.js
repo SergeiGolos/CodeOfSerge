@@ -19,5 +19,8 @@ define(['./lib/ngFactory'], function($__0) {
     __esModule: true
   };
 });
-
+(function(angular, _, $) {
+  'use strict';
+  
+})(angular, _, $);
 //# sourceMappingURL=data.map

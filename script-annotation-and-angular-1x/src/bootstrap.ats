@@ -1,6 +1,9 @@
 import {ngBootstrap} from './lib/ngBootstrap';
 import {data} from './data';
 import {main} from './main';
+import {main2} from './main2';
 import {hello} from './hello';
 
-var app = ngBootstrap(document, angular.module('test', []), arguments);
+var app = angular.module('test', ['ngRoute']);
+ngBootstrap(document, app, arguments);
+angular.copy(source , destination)

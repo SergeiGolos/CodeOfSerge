@@ -9,12 +9,17 @@ export class ngBase {
 	get name() { return this.args.name; }		
 	get options() { return this.args.options; }
 
+	find(fn, name) {
+		return fn.annotations.filter((item, index) => {
+			return item.constructor.name === name;
+		});
+		
+	}
+
 	wrap(fn) {		
 		var result = [];
-		var injectAnnotation = fn.annotations.filter((item, index) => {
-			return item.constructor.name === "ngInject";
-		});
-		var inject = injectAnnotation.length > 0 ? injectAnnotation[0].inject : [];		
+		var injectAnnotation = this.find(fn, 'ngInject');
+		var inject = injectAnnotation.length > 0 ? injectAnnotation[0].inject : [];
 		for (var item of inject) {
 			result.push(item);
 		}

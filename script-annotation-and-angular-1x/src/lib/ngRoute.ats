@@ -1,0 +1,11 @@
+export class ngRoute {	
+	constructor(path, options) {
+		this.args = {
+			path : path,
+			options : options || {}
+		};
+	}
+
+	get path() { return this.args.path; }		
+	get options() { return this.args.options; }
+}

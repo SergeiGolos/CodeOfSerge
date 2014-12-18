@@ -26,11 +26,17 @@ define(['./ngBase'], function($__0) {
   }
   var ngBootstrap = function ngBootstrap(target, app, imports) {
     var components = process(imports);
-    for (var index in components) {
-      var component = components[index];
-      component.annotation.register(app, component.constuct);
+    var config = components.map((function(component) {
       console.log('Auto-registered: ' + component.annotation.name);
-    }
+      return component.annotation.register(app, component.constuct);
+    }));
+    app.config(['$routeProvider', (function($routeProvider) {
+      _(config).filter((function(conf) {
+        return conf;
+      })).each((function(conf) {
+        return conf($routeProvider);
+      }));
+    })]);
     angular.bootstrap(target, [app.name]);
   };
   ($traceurRuntime.createClass)(ngBootstrap, {}, {});

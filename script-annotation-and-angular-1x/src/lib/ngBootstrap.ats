@@ -1,34 +1,39 @@
 import {ngBase} from './ngBase';
 
 function process(imports) {
-		var components = [];
-		for (var key in imports) {				
-		  	var currentImport = imports[key];
-		  	for (var prop in currentImport) {
-				var importComponent = currentImport[prop];		  		
-		  		if (prop.indexOf('__') == -1 && importComponent.annotations) { 
-					var base = importComponent.annotations.filter(function(annotation, index) {
-						return annotation instanceof ngBase;
-					}) || [];
-	  				
-	  				if (base.length > 0) {
-	  					components.push({constuct : importComponent, annotation : base[0]});
-	  				}
-		  		}	  	
-			}
+	var components = [];
+	for (var key in imports) {				
+	  	var currentImport = imports[key];
+	  	for (var prop in currentImport) {
+			var importComponent = currentImport[prop];		  		
+	  		if (prop.indexOf('__') == -1 && importComponent.annotations) { 
+				var base = importComponent.annotations.filter(function(annotation, index) {
+					return annotation instanceof ngBase;
+				}) || [];
+  				
+  				if (base.length > 0) {
+  					components.push({constuct : importComponent, annotation : base[0]});
+  				}
+	  		}	  	
 		}
-		return components;	
 	}
+	return components;	
+}
 
 export class ngBootstrap {
 	constructor(target, app, imports) {		
 		var components = process(imports);
-		for (var index in components) {	  								
-  			var component = components[index];
-  			component.annotation.register(app, component.constuct);
+		var config = components.map((component) => {  			  			
   			console.log('Auto-registered: ' + component.annotation.name);
-		}
-		  				
+			return component.annotation.register(app, component.constuct);
+		})		
+
+		app.config(['$routeProvider', ($routeProvider) => {
+			_(config)
+				.filter((conf) => conf)
+				.each((conf) => conf($routeProvider));
+		}]);
+
 		angular.bootstrap(target, [ app.name ]);
 	}	
 }

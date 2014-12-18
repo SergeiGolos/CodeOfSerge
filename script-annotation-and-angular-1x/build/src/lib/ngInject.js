@@ -1,9 +1,11 @@
 define([], function() {
   "use strict";
   var ngInject = function ngInject(inject) {
-    this.inject = inject;
+    this.args = {inject: inject};
   };
-  ($traceurRuntime.createClass)(ngInject, {}, {});
+  ($traceurRuntime.createClass)(ngInject, {get inject() {
+      return this.args.inject;
+    }}, {});
   return {
     get ngInject() {
       return ngInject;

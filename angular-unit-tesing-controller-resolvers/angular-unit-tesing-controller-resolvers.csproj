@@ -838,6 +838,7 @@
     <Content Include="Content\scripts\i18n\angular-locale_zh.js" />
     <Content Include="Content\scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Content\scripts\i18n\angular-locale_zu.js" />
+    <Content Include="Content\test\app.test.js" />
     <Content Include="Views\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

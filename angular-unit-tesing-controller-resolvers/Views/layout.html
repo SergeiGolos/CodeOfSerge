@@ -8,14 +8,18 @@
 
     <link href="@Path['~/content/bootstrap.css']" rel="Stylesheet" />
     <link href="@Path['~/content/default.min.css']" rel="Stylesheet" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/jasmine/2.0.0/jasmine.css" rel="stylesheet" type="text/css"/>
     
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jasmine/2.0.0/jasmine.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jasmine/2.0.0/jasmine-html.js"></script>
     <script src="@Path['~/content/scripts/jquery.min.js']"></script>
     <script src="@Path['~/content/scripts/highlight.min.js']"></script>
     <script src="@Path['~/content/scripts/bootstrap.js']"></script>
     <script src="@Path['~/content/scripts/angular.js']"></script>
     <script src="@Path['~/content/scripts/angular-route.js']"></script>
+    <script src="@Path['~/content/scripts/i18n/angular-locale_en-us.js']"></script>
 
-    <script src="@Path['~/content/app/app.js']"></script>
+    <script src="@Path['~/content/app/app.js']"></script>    
 
     <style type="text/css">
         body {
@@ -48,5 +52,8 @@
     <div class="container">
         @Section['Content']
     </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jasmine/2.0.0/boot.js"></script>
+    <script src="@Path['~/content/scripts/angular-mocks.js']"></script>
+    <script src="@Path['~/content/test/app.test.js']"></script>
 </body>
 </html>

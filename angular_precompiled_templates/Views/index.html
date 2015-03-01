@@ -1,0 +1,20 @@
+﻿@Master['layout']
+
+@Section['Content']
+
+
+<script type="text/lodash-template" id="row">
+    <div data->
+        <% _.forEach(columns, function(column) { %>
+        <span data-nd-bind="model.<%- column %>" />
+        <% }); %>
+    </div>
+</script>
+
+<div lo-template-trigger="view" data-template="row">
+    TEest
+    <div data-ng-repeat="record in view.data" lo-template="row" data-model="record">
+    </div>
+</div>
+
+@EndSection

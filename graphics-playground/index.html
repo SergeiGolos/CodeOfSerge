@@ -1,0 +1,96 @@
+<!doctype html>
+
+<html>
+
+  <title>Name your game</title>
+
+  <body>
+	<script src="http://playgroundjs.com/script/playground.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js"></script>
+  	<script type="text/javascript">
+		  function rndRange(min, max) {
+			return Math.floor(Math.random() * (max - min + 1)) + min;
+		   }
+		   
+		   function fragmentLargeParticle(particle, size) {
+			   var particles = [];
+			   var gridX = 0;
+			   var gridY = 0;
+			   while(gridX < particle.size) {
+				   while(gridY < particle.size) {
+					   particles.push(createParticle(
+						   particle.x + gridX,
+						   particle.y + gridY,
+						   size,
+						   rndRange(1000, 10000)	   
+					   ));
+					   gridY += size;
+				   }
+				   gridY = 0;
+				   gridX += size;
+			   }
+			   return particles;
+		   }
+		   
+		   function createParticle(x,y, size, lives) {
+			   return { x: x, y: y, size : size, lives : lives }
+		   }
+		  
+		  var app = new PLAYGROUND.Application({
+			  	create: function() {
+					var size = 64;
+					this.particles = [ createParticle(rndRange(0, this.width - size), rndRange(0, this.height - size), size, -1) ];						  
+				},
+				render: function() {																			
+					var layer = this.layer;
+					
+					layer.clear("#ffffff");
+					layer.fillStyle("#000088");
+								
+					_.forEach(this.particles, function(item, index) {
+						layer.fillRect(item.x, item.y, item.size, item.size);	
+					});																									
+				},
+				step : function(dt) {		  			
+					this.particles = _.filter(this.particles, function(item) {							
+							return item.lives !== 0 && item.size > 1;
+						});
+					
+					_.forEach(this.particles, function(item) {
+							if (item.lives > 0) {
+								item.lives -= (1 * dt);
+								item.x = item.x + rndRange(-50, 50)
+								item.y = item.y + rndRange(-50, 50)
+								item.size = item.size - (0.05);
+							}
+						});
+														 
+				},
+				mousedown: function(data) {
+    				var particles = this.particles;
+					var removed = [];
+					var created = _.chain(particles)
+						.where(function(item){
+							return data.lives < 0 && 
+							data.x > item.x && data.x < item.x + item.size  && 
+							data.y > item.y && data.y < item.y + item.size;
+						})
+						.map(function(item) {
+							removed.push(item);																					
+							return fragmentLargeParticle(item, 5);
+						})
+						.flatten()
+						.value();
+						
+					_.forEach(removed, function(item) {
+						var i = particles.indexOf(item);
+						particles.splice(i, 1);
+					});								
+					
+					this.particles = _(particles).concat(created).value();
+  				}								
+		   });	  
+	</script>
+  </body>
+
+</html>

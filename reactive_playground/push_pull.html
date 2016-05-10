@@ -1,0 +1,80 @@
+<html>
+  <head>
+    <title>
+      Rx.Tests
+    </title>
+  </head>
+  <body>
+    <div>
+      <h1>Current Mouse Position</h1>
+      <button id="stop">
+      <div id="mousePosition">
+
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/2.4.1/rx.all.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/q.js/2.0.3/q.js"></script>
+    <script>
+      (function(Rx, $) {
+        'use strict'
+
+        /*
+          The idea here is to create a consumer/producer relationship
+          where the concumer watches an observable but can pause the producer.
+        */
+
+        var deferred = Q.defer();
+
+
+
+
+
+
+        // holds the obsever function.
+        //
+        function Producer() {
+
+
+          this.
+
+          this.DataSouce = Rx.Observable.range(0,50).publish();
+        }
+
+
+
+
+        Producer
+
+        Con
+
+
+        // grab a reference to our output element.
+        var target = $("#mousePosition");
+        target.css('position','absolute');
+
+        // Create an observable from the mousemove event on the document object.
+        var onMouseMove = Rx.Observable.fromEvent($(document), 'mousemove')
+          // Grab the intesting information, current position.
+          .map(function(e) {
+            return { x : e.clientX, y : e.clientY };
+          });
+
+          // As soon as the position is changed update the html element
+          // with the new position of the mouse.
+          var textUpdate = onMouseMove.subscribe(function(e) {
+            target.text(e.x + "," + e.y);
+          });
+
+          // move the the html element to the position of the mouse 50ms
+          // in the past.
+          var positionUpdate = onMouseMove.delay(50).subscribe(function(e) {
+            target.css('top', (e.y) + "px");
+            target.css('left', (e.x + 20) +  "px");
+          });
+
+      })(window.Rx, window.$);
+    </script>
+  </body>
+</html>

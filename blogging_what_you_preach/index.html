@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>BlogUnit</title>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.12.0/lodash.js"></script>
+  <Script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.js"></script>
+  <script src="blogunit/blogUnit.js"></script>      
+</head>
+
+<body>
+    <div>        
+        <div> The tested function </div>
+        <pre class= "language-javascript name-fn">
+            <code class="name-fn"> 
+                function myadd(a,b) { return a + b; }
+            </code>
+        </pre>
+        
+        
+        <div> The unit test function </div>
+        <pre class= "language-javascript name-fntest">
+            <code class="name-fntest"> 
+                describe("test my pre function", function() {
+                    it("it adds two numbers", function() {
+                        expect(myadd(1,1)).toBe(2);
+                    });
+                });
+            </code>
+        </pre>
+    <div>
+        <pre class=" language-blogunit">
+            ## sources
+            src/Player.js
+            src/Song.js
+            fn
+
+            ## tests
+            spec/SpecHelper.js
+            spec/PlayerSpec.js          
+            fntest
+        </pre>
+    </div>
+</body>
+</html>

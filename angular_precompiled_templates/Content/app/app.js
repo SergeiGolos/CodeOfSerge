@@ -75,11 +75,15 @@
     lib.directive('script', [        
         'lodashTemplateProvider',      
         function (lodashTemplateProvider) {            
-            return function (scope, element, attr) {
-                if (attr["type"].toLowerCase() !== "text/lodash-template") {
-                    return;
+            return {
+                restrict: 'E',
+                terminal: true,
+                compile: function (element, attr) {
+                    if (attr["type"].toLowerCase() !== "text/lodash-template") {
+                        return;
+                    }
+                    lodashTemplateProvider.load(attr["id"], element.html());
                 }
-                lodashTemplateProvider.load(attr["id"], element.html());
             }           
         }
     ]);
@@ -87,8 +91,8 @@
     lib.directive('loTemplateTrigger', [
         'lodashTemplateProvider',
         function(lodashTemplateProvider) {
-            return {
-                scope : {                   
+            return {         
+                scope: {
                     model : "=loTemplateTrigger"  
                 },
                 link: function (scope, element, attr) {
@@ -103,33 +107,39 @@
     
     lib.directive('loTemplate', [
         'lodashTemplateProvider',
-        function(lodashTemplateProvider) {
+        '$animate',
+        function(lodashTemplateProvider, $animate) {
             return {
+                transclude: 'element',
+                replace : false,
                 scope: {
                     model: "="
                 },
-                link: function(scope, element, attr) {
+                link: function(scope, element, attr, controller, $transclude) {
+                    var currentNode;
                     if (!attr["loTemplate"]) {
-                        throw "loTempalte could not bind to empty template."
+                        throw "loTempalte could not bind to empty template.";
                     }
 
-                    function bindTempalte(tmpl) {
-                        (tmpl.link || _.noop)(
-                            scope,
-                            function namespaceAdaptedClone(clone) {
-                                element.append(clone);
-                            },
-                            {
-                                futureParentElement: element
-                            });
+                    function update(template) {
+                        $transclude(scope, function(clone) {                            
+                            element.empty();
+                            element.append(clone.html(template(scope)));                            
+                        });                        
                     }
+                
+                    scope.$watch(attr.loTemplate, function (value) {
+                        if (value) {
+                            update(lodashTemplateProvider.linker(attr["loTemplate"]));
+                            return;
+                        }
+                        update(_.noop);
+                    });
 
                     scope.$on('cplodash-update', function(event, data) {
                         if (data.id !== attr["loTemplate"]) return;
-                        bindTempalte(data);
+                        update(data.link);
                     });
-
-                    bindTempalte({ link: lodashTemplateProvider.linker(attr["loTemplate"]) });
                 }
             };
         }

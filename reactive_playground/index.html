@@ -1,0 +1,43 @@
+<html>
+<head>
+    <title>Rx Demo</title>
+</head>
+<body>   
+    <link rel="stylesheet" type="text/css" href="./rx-stack-view.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.13.1/lodash.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js"></script>    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.0.0/rx.lite.js"></script>    
+    <script type="text/javascript" src="./blogHarness.js"></script>
+    <script type="text/javascript" src="./rx-stack-view.js"></script>        
+    <pre>
+    <code class="language-javascript name-example">  
+        var container = new StackViewContainer("body");                     
+           
+        var list1 = Rx.Observable.interval(300).map(function(data) { return data + 1;}).take(10);
+        var list2 = Rx.Observable.interval(300).throttle(450).take(8);
+        var mapped = list1.map(function(data) { return data * 3});
+        var merged = list1.merge(list2).merge(mapped);
+        var filtered = merged.filter(function(data) { return data % 2; });
+        
+        
+        // bind to the UI
+        container.subscribe(list1, "Basic Interval (Event Stream 1)");
+                        
+        container.subscribe(mapped, "Mapped: * 3 (Event Stream 2)");
+        container.subscribe(list2, "Interval with Throttle (Event Stream 3)");        
+        container.subscribe(merged, "All 3 Event Streams Merged" );
+        container.subscribe(filtered, "Filtered: Odd");
+        
+        
+        notifyComplete();        
+    </code>    
+    </pre>
+    <code class="language-runner name-firstRunner">
+        !http://localhost/ReactivePlayground/rx-stack-view.css
+        https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js    
+        https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.0.0/rx.lite.js
+        ./ReactivePlayground/rx-stack-view.js
+        example
+    </code>   
+</body>
+</html> 

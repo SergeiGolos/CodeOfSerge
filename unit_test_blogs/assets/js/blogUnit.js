@@ -29,7 +29,7 @@
                    if (blocks[item]) {
                        resolve(blocks[item].code);
                        return;
-                   } 
+                   }
                    
                    var xhr;
                    if (window.XMLHttpRequest) {
@@ -50,16 +50,20 @@
         var frame = this.source.next()[0];   
         Promise.all(dependencies).then(function(data) {
             _.each(data, function(script) {             
-                frame.contentWindow.postMessage(script, "*");
+                var blktScript = script;     
+                
+                
+                ///var data = blanket.processFile(script, "", function(){}, function(){})
+                           
+                frame.contentWindow.postMessage(blktScript, "*");
             })
-            frame.contentWindow.postMessage("window.blogUnitStart()", "*");
+            frame.contentWindow.postMessage("(window.blogUnitStart || function() {})()", "*");
         });
     }
     
     CodeBlock.prototype.complete = function(message) {
-        var s = this.source;
-        s.next().height(message);                
-    }    
+        this.source.next().height(message);                
+    }
 
     function createHarness(block) {
         var content = encodeURI('<!DOCTYPE html>' + 
@@ -68,14 +72,16 @@
                 '<title>Jasmine Spec Runner v2.4.1</title>' + 
                 '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.4.1/jasmine.css">' +                 
                 '<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.4.1/jasmine.js"></script>' + 
-                '<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.4.1/jasmine-html.js"></script>' +                        
+                '<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.4.1/jasmine-html.js" data-cover></script>' +       
+                '<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/blanket.js/1.1.4/blanket.js"></script>' +                  
                 '<script type="text/javascript">' + 
                     'window.runnerName = "' + block.name + '";' + 
                     'window.parent.postMessage({ id: window.runnerName, state : "ready" }, "*");' +
                     'window.addEventListener("message", function(event){' + 
                         'var script = document.createElement("script");' + 
                         'script.setAttribute("type", "text/javascript");' + 
-                        'script.text = event.data; ' + 
+                        'script.text = event.data; ' +
+                        'script.setAttribute("data-cover","");' + 
                         'document.body.appendChild(script);' + 
                     '});' +  
                 '</script>' +     
